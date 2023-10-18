@@ -20,21 +20,22 @@ const userSchema = new dynamoose.Schema({
 const User = dynamoose.model('midterm-users', userSchema);
 
 exports.handler = async (event) => {
-  const userId = event.pathParameters.id;
+  const userId = parseInt(event.pathParameters.id);
 
   try {
     const user = await User.get(userId);
 
     if (user) {
-      // const lambda = new AWS.Lambda();
+      const lambda = new AWS.Lambda();
 
-      // const params = {
-      //   FunctionName: 'YourSecondLambdaFunctionName',
-      //   InvocationType: 'Event',
-      //   Payload: JSON.stringify({ user }),
-      // };
+      const params = {
+        FunctionName: 'openaiRequest',
+        InvocationType: 'Event',
+        Payload: JSON.stringify({ user }),
+      };
 
-      // const response = await lambda.invoke(params).promise();
+      const response = await lambda.invoke(params).promise();
+      console.log(response.body);
 
       if (response.FunctionError) {
         throw new Error(`Lambda invocation error: ${response.FunctionError}`);
