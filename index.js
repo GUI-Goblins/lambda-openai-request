@@ -35,7 +35,7 @@ exports.handler = async (event) => {
       };
 
       const response = await lambda.invoke(params).promise();
-      console.log(response.body);
+      console.log('Invocation response: ', response);
 
       if (response.FunctionError) {
         throw new Error(`Lambda invocation error: ${response.FunctionError}`);
