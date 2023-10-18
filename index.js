@@ -23,7 +23,7 @@ exports.handler = async (event) => {
   const userId = event.pathParameters.id;
 
   try {
-    const user = await User.get({ userId });
+    const user = await User.get(userId);
 
     if (user) {
       // const lambda = new AWS.Lambda();
