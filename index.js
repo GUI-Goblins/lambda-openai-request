@@ -1,7 +1,7 @@
 'use strict';
 
 const dynamoose = require('dynamoose');
-const { LambdaClient, InvokeCommand } = require ('@aws-sdk/client-lambda');
+const { LambdaClient, InvokeCommand } = require('@aws-sdk/client-lambda');
 
 const lambda = new LambdaClient({ region: 'us-west-2' });
 
@@ -11,18 +11,16 @@ const userSchema = new dynamoose.Schema({
   age: Number,
   race: {
     type: String,
-    // enum: ['human', 'elf', 'dwarf', 'gnome'],
   },
   class: {
     type: String,
-    // enum: ['fighter', 'rogue', 'sorcerer', 'cleric'],
   },
 });
 
 const User = dynamoose.model('midterm-users', userSchema);
 
 exports.handler = async (event) => {
-  console.log("HERES THE EVENT FROM LAMBDA 1A: ", event);
+  console.log('HERES THE EVENT FROM LAMBDA 1A: ', event);
   const userId = parseInt(event.pathParameters.id);
   const body = JSON.parse(event.body);
 
@@ -39,9 +37,7 @@ exports.handler = async (event) => {
         Payload: JSON.stringify({ user, body }),
       };
 
-      const response = await lambda.send(
-        new InvokeCommand(params)
-      );
+      const response = await lambda.send(new InvokeCommand(params));
 
       const payload = Buffer.from(response.Payload).toString();
 
@@ -52,30 +48,22 @@ exports.handler = async (event) => {
       }
       console.log('Response from openaiRequest: ', payload);
       const result = JSON.parse(payload);
-       console.log('Parse payload to object: ', result);
-
+      const resultBody = JSON.parse(result.body);
+      console.log('Parse payload to object: ', result);
+      console.log('Parse result body: ', resultBody);
       return {
         statusCode: 200,
-        // headers: {
-        //   'Content-Type': 'application/json',
-        // },
-        body: JSON.stringify(result),
+        body: JSON.stringify(resultBody),
       };
     } else {
       return {
         statusCode: 404,
-        // headers: {
-        //   'Content-Type': 'application/json',
-        // },
         body: JSON.stringify({ message: 'User not found' }),
       };
     }
   } catch (error) {
     return {
       statusCode: 500,
-      // headers: {
-      //   'Content-Type': 'application/json',
-      // },
       body: JSON.stringify({ error: error.message }),
     };
   }
