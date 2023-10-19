@@ -30,6 +30,9 @@ exports.handler = async (event) => {
     if (user) {
       const lambda = new AWS.Lambda();
 
+      console.log('user before stringify:', user);
+      console.log('body before stringify:', body);
+
       const params = {
         FunctionName: 'openaiRequest',
         InvocationType: 'RequestResponse',
