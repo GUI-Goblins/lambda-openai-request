@@ -43,15 +43,15 @@ exports.handler = async (event) => {
         new InvokeCommand(params)
       );
 
-      const payload = Buffer.from(response.Payload).toString();
+      // const payload = Buffer.from(response.Payload).toString();
 
       console.log('Invocation response: ', response);
 
       if (response.FunctionError) {
         throw new Error(`Lambda invocation error: ${response.FunctionError}`);
       }
-      console.log('Response from openaiRequest: ', payload);
-      const result = JSON.parse(payload);
+      // console.log('Response from openaiRequest: ', payload);
+      const result = JSON.parse(response);
       // return result;
 
       return {
