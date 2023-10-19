@@ -42,7 +42,7 @@ exports.handler = async (event) => {
       if (response.FunctionError) {
         throw new Error(`Lambda invocation error: ${response.FunctionError}`);
       }
-
+      console.log('Response from openaiRequest: ', response.Payload);
       const result = JSON.parse(response.Payload);
       return result;
 
