@@ -47,12 +47,12 @@ exports.handler = async (event) => {
       }
       console.log('Response from openaiRequest: ', response.Payload);
       const result = JSON.parse(response.Payload);
-      return result;
+      // return result;
 
-      // return {
-      //   statusCode: 200,
-      //   body: JSON.stringify(user),
-      // };
+      return {
+        statusCode: 200,
+        body: JSON.stringify(result),
+      };
     } else {
       return {
         statusCode: 404,
