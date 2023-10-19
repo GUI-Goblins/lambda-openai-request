@@ -1,7 +1,7 @@
 'use strict';
 
 const dynamoose = require('dynamoose');
-import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda';
+const { LambdaClient, InvokeCommand } = require ('@aws-sdk/client-lambda');
 
 const lambda = new LambdaClient({ region: 'us-west-2' });
 
