@@ -1,7 +1,9 @@
 'use strict';
 
 const dynamoose = require('dynamoose');
-const AWS = require('aws-sdk');
+import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda';
+
+const lambda = new LambdaClient({ region: 'us-west-2' });
 
 const userSchema = new dynamoose.Schema({
   id: Number,
@@ -39,14 +41,19 @@ exports.handler = async (event) => {
         Payload: JSON.stringify({ user, body }),
       };
 
-      const response = await lambda.invoke(params).promise();
+      const response = await lambda.send(
+        new InvokeCommand(params)
+      );
+
+      const payload = Buffer.from(response.Payload).toString();
+
       console.log('Invocation response: ', response);
 
       if (response.FunctionError) {
         throw new Error(`Lambda invocation error: ${response.FunctionError}`);
       }
-      console.log('Response from openaiRequest: ', response.Payload);
-      const result = JSON.parse(response.Payload);
+      console.log('Response from openaiRequest: ', payload);
+      const result = JSON.parse(payload);
       // return result;
 
       return {
