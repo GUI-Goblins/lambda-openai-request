@@ -30,8 +30,6 @@ exports.handler = async (event) => {
     const user = await User.get(userId);
 
     if (user) {
-      const lambda = new AWS.Lambda();
-
       console.log('user before stringify:', user);
       console.log('body before stringify:', body);
 
