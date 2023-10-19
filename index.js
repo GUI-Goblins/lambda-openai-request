@@ -51,10 +51,11 @@ exports.handler = async (event) => {
       const resultBody = JSON.parse(result.body);
       console.log('Parse payload to object: ', result);
       console.log('Parse result body: ', resultBody);
-      return {
-        statusCode: 200,
-        body: JSON.stringify(resultBody),
-      };
+      // return {
+      //   statusCode: 200,
+      //   body: JSON.stringify(resultBody),
+      // };
+      return resultBody
     } else {
       return {
         statusCode: 404,
