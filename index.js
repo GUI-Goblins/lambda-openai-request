@@ -51,17 +51,26 @@ exports.handler = async (event) => {
 
       return {
         statusCode: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(result),
       };
     } else {
       return {
         statusCode: 404,
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ message: 'User not found' }),
       };
     }
   } catch (error) {
     return {
       statusCode: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ error: error.message }),
     };
   }
