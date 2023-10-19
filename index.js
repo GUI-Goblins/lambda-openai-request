@@ -21,6 +21,7 @@ const User = dynamoose.model('midterm-users', userSchema);
 
 exports.handler = async (event) => {
   const userId = parseInt(event.pathParameters.id);
+  const body = parseInt(event.body);
 
   try {
     const user = await User.get(userId);
@@ -31,7 +32,7 @@ exports.handler = async (event) => {
       const params = {
         FunctionName: 'openaiRequest',
         InvocationType: 'Event',
-        Payload: JSON.stringify({ user }),
+        Payload: JSON.stringify({ user, body }),
       };
 
       const response = await lambda.invoke(params).promise();
