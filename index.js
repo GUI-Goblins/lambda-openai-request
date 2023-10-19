@@ -32,7 +32,7 @@ exports.handler = async (event) => {
 
       const params = {
         FunctionName: 'openaiRequest',
-        InvocationType: 'Event',
+        InvocationType: 'RequestResponse',
         Payload: JSON.stringify({ user, body }),
       };
 
@@ -43,12 +43,13 @@ exports.handler = async (event) => {
         throw new Error(`Lambda invocation error: ${response.FunctionError}`);
       }
 
-      // const result = JSON.parse(response.Payload);
+      const result = JSON.parse(response.Payload);
+      return result;
 
-      return {
-        statusCode: 200,
-        body: JSON.stringify(user),
-      };
+      // return {
+      //   statusCode: 200,
+      //   body: JSON.stringify(user),
+      // };
     } else {
       return {
         statusCode: 404,
