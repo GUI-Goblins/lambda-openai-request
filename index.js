@@ -22,7 +22,7 @@ const User = dynamoose.model('midterm-users', userSchema);
 exports.handler = async (event) => {
   console.log("HERES THE EVENT FROM LAMBDA 1A: ", event);
   const userId = parseInt(event.pathParameters.id);
-  const body = parse(event.body);
+  const body = JSON.parse(event.body);
 
   try {
     const user = await User.get(userId);
