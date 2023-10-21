@@ -13,7 +13,7 @@
 > To test, use: `npm test`
 
 Play game utilizing live link below:
-![Live Link](https://questforge.netlify.app/)
+[Live Link](https://questforge.netlify.app/)
 
 ## UML Diagram
 
